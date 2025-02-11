@@ -29,3 +29,4 @@ EXPOSE $PORT
 
 # Run the application
 ENTRYPOINT ["sh", "-c", "java -jar inventory.jar --server.port=$PORT"]
+
