@@ -11,6 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import java.time.LocalDate;
 
 @Controller
 @RequestMapping("/sales")
@@ -38,5 +40,15 @@ public class SaleController extends BaseController {
         sale.setSaleDate(LocalDateTime.now());
         saleService.createSale(sale);
         return "redirect:/sales";
+    }
+    
+    @GetMapping("/report")
+    public String viewReport(
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+            Model model) {
+        model.addAttribute("activeTab", "sales");
+        model.addAttribute("date", date);
+        model.addAttribute("sales", saleService.getSalesByDate(date));
+        return getViewPath("sales/report");
     }
 } 

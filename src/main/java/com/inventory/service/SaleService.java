@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -34,5 +36,11 @@ public class SaleService {
     
     public List<Sale> getRecentSales() {
         return saleRepository.findTop10ByOrderBySaleDateDesc();
+    }
+    
+    public List<Sale> getSalesByDate(LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.plusDays(1).atStartOfDay();
+        return saleRepository.findBySaleDateBetweenOrderBySaleDateDesc(startOfDay, endOfDay);
     }
 } 
