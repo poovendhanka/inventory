@@ -12,6 +12,56 @@
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     
     <style>
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background: #2470dc;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                width: 75% !important;
+            }
+
+            .sidebar.show {
+                transform: translateX(0);
+            }
+
+            main {
+                margin-left: 0 !important;
+                width: 100% !important;
+                padding: 1rem !important;
+            }
+
+            .navbar {
+                width: 100% !important;
+                margin-left: 0 !important;
+                padding-left: 60px;
+            }
+
+            .card {
+                margin-bottom: 1rem !important;
+            }
+
+            .table-responsive {
+                overflow-x: auto;
+            }
+        }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -118,8 +168,13 @@
     </style>
 </head>
 <body>
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileSidebarToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <!-- Sidebar -->
-    <nav class="sidebar">
+    <nav class="sidebar" id="sidebar">
         <div class="position-sticky">
             <ul class="nav flex-column">
                 <li class="nav-item">
@@ -190,6 +245,32 @@
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
+    <!-- Mobile menu script -->
+    <script>
+        $(document).ready(function() {
+            // Mobile menu toggle
+            $('#mobileSidebarToggle').click(function() {
+                $('#sidebar').toggleClass('show');
+            });
+
+            // Close sidebar when clicking outside on mobile
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#sidebar').length && 
+                    !$(event.target).closest('#mobileSidebarToggle').length && 
+                    $('#sidebar').hasClass('show')) {
+                    $('#sidebar').removeClass('show');
+                }
+            });
+
+            // Close sidebar when clicking a nav link on mobile
+            $('.sidebar .nav-link').click(function() {
+                if ($(window).width() <= 768) {
+                    $('#sidebar').removeClass('show');
+                }
+            });
+        });
+    </script>
+
     <!-- Page specific scripts -->
     <div id="page-scripts">
         <th:block th:replace="~{:: #pagescript}">
