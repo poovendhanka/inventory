@@ -34,6 +34,29 @@
                 </div>
             </div>
 
+            <!-- Sales Report Card -->
+            <div class="col-md-12 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Sales Report</h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/sales/report}" method="get">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-label">Date</label>
+                                    <input type="date" class="form-control" name="date" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary d-block w-100">View Sales Report</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <!-- Sales Form Card -->
             <div class="col-md-12 mb-4">
                 <div class="card">
